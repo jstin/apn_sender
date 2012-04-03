@@ -1,6 +1,5 @@
 require 'resque'
 require 'resque/plugins/access_worker_from_job'
-require 'resque/hooks/before_unregister_worker'
 require 'json'
 require 'active_support'
 
