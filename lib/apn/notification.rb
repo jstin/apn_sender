@@ -45,14 +45,16 @@ module APN
 
     # Completed encoded notification, ready to send down the wire to Apple
     def packaged_notification
-      pt = packaged_token
-      pm = packaged_message
-      [0, 0, 32, pt, 0, pm.size, pm].pack("ccca*cca*") 
+      payload = packaged_message
+      device_token_length = 32 # For now they're always 32
+      identifier = 0 # No identifier support yet
+      expiry = 0 # No expiry support yet
+      [1, identifier, expiry, device_token_length, sanitized_token, payload.length].pack('CNNnH64n') << payload
     end
 
-    # Device token, compressed and hex-ified
-    def packaged_token
-      [@token.gsub(/[\s|<|>]/,'')].pack('H*')
+    # Device token, minus <> and space
+    def sanitized_token
+      [@token.gsub(/[\s|<|>]/,'')]
     end
 
     # Converts the supplied options into the JSON needed for Apple's push notification servers.
