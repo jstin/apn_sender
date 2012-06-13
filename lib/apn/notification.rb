@@ -54,7 +54,7 @@ module APN
 
     # Device token, minus <> and space
     def sanitized_token
-      [@token.gsub(/[\s|<|>]/,'')]
+      @token.gsub(/[\s|<|>]/,'')
     end
 
     # Converts the supplied options into the JSON needed for Apple's push notification servers.
